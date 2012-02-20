@@ -1,0 +1,20 @@
+Installation Instructions
+*************************
+
+Copyright (C) 2011 Steven Braeger
+
+   Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without warranty of any kind.
+
+
+
+Building from Source:
+===================================
+
+Prerequisites:
+	A C++ compiler that supports OpenMP
+
+To build from source:
+	This project uses CMake.  Follow the standard instructions for a CMake Project as found on their website.
