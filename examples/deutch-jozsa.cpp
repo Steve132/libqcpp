@@ -1,15 +1,15 @@
 #include<iostream>
 #include "../qram.h"
 #include "../qgates.h"
-#include<functional>
 using namespace std;
 
+typedef bool (*FUNCPTR)(const std::size_t&);
 //lowest bit is y
 //all other bits are x
 class Uf:public qgate
 {
 public:
-	Uf(const std::function<bool (const std::size_t&)>& ft,int nxb):qgate(nxb+1,"Uf"),
+	Uf(const FUNCPTR& ft,int nxb):qgate(nxb+1,"Uf"),
 		f(ft),
 		nxbits(nxb)
 	{
@@ -30,11 +30,11 @@ public:
 		}
 	}
 protected:
-	std::function<bool (const std::size_t&)> f;
+	FUNCPTR f;
 	int nxbits;
 };
 
-bool sim_deutch_jozsa(const std::function<bool (const std::size_t&)>& f,int num_bits)
+bool sim_deutch_jozsa(const FUNCPTR& f,int num_bits)
 {
 	std::size_t ybit=1;
 	std::size_t xbits=(1 << (num_bits+1))-2;
@@ -61,19 +61,19 @@ bool sim_deutch_jozsa(const std::function<bool (const std::size_t&)>& f,int num_
 	return m==0;
 }
 
-bool constant(const std::size_t x)
+bool constant(const std::size_t& x)
 {
 	return true;
 }
 
-bool not_constant(const std::size_t x)
+bool not_constant(const std::size_t& x)
 {
 	return (x & 1) == 0;
 }
 
 int main(int argc,char**)
 {
-	if(sim_deutch_jozsa(not_constant,2))
+	if(sim_deutch_jozsa(&not_constant,2))
 		cout << "The function is a constant function" << endl;
 	else
 		cout << "The function is NOT a constant function" << endl;
