@@ -1,4 +1,4 @@
 [Project]
-Name=libqcpp
 Manager=KDevCMakeManager
+Name=libqcpp-gc
 VersionControl=

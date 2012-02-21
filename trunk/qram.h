@@ -24,7 +24,7 @@ public:
 		measurement(std::size_t sz):state(sz) {}
 		bool check_if(std::size_t reg) const
 		{
-			return abs(abs(state[reg])-1.0) > 10e-7; 
+			return std::abs(std::abs(state[reg])-1.0) < 10e-7; 
 		}
 		bool operator==(const std::size_t& r) const
 		{
