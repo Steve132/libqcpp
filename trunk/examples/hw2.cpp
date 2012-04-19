@@ -29,7 +29,7 @@ void p1a()
 	const int xbit=1;
 	const int ybit=2;
 	
-	double phi=0.0;
+	double phi=M_PI/8.0;
 	
 	qram r(2,std::clog);
 	r.op(qhadamard(),xbit);
@@ -37,7 +37,8 @@ void p1a()
 	r.op(qhadamard(),xbit);
 	qram::measurement m=r.measure(xbit);
 	
-	cout << "P1a:\n" << m << endl;
+	//cout << "P1a:\n" << m << endl;
+	cout<< r << endl;
 }
 
 void p1b()
@@ -50,7 +51,7 @@ void p1b()
 	qram r(2,std::clog);
 	r.op(qhadamard(),xbit);
 	r.op(cphasor(phi),xbit | ybit);
-	r.op(qrotate(3.0*M_PI/2.0),xbit);
+	r.op(qshift(3.0*M_PI/2.0),xbit);
 	r.op(qhadamard(),xbit);
 	qram::measurement m=r.measure(xbit);
 	
@@ -59,23 +60,32 @@ void p1b()
 
 void p2()
 {
-	const int xbit=4;
-	const int y1bit=1;
-	const int y2bit=2;
+	const int xbit=1;
+	const int y1bit=2;
+	const int y2bit=4;
 	
 	qram r(3,std::clog);
-	r.op(qhadamard(),xbit);
-	r.op(qcswap(),xbit | y1bit | y2bit);
-	r.op(qhadamard(),xbit);
+	//r.op(qnot(),y1bit);
+	clog << r;
+	r.op(qnot(),y2bit);
+	clog << r;
 	
+	r.op(qhadamard(),xbit);
+	clog << r;
+	r.op(qcswap(),xbit | y1bit | y2bit);
+	clog << r;
+	r.op(qhadamard(),xbit);
+	clog << r;
 	qram::measurement m=r.measure(xbit);
 	
-	cout << "P2:\n" << m << endl;
+	clog << "P2:\n" << m << endl;
 }
 
 
 int main(int,char**)
 {
-	p1b();
+//	p1a();
+//	p1b();
+	p2();
 	return 0;
 }

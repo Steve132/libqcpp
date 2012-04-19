@@ -73,7 +73,7 @@ bool not_constant(const std::size_t& x)
 
 int main(int argc,char**)
 {
-	if(sim_deutch_jozsa(&not_constant,2))
+	if(sim_deutch_jozsa(&not_constant,23))
 		cout << "The function is a constant function" << endl;
 	else
 		cout << "The function is NOT a constant function" << endl;

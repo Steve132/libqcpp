@@ -12,8 +12,18 @@ static inline void print_binary(std::ostream& oss,const std::size_t& val,const u
 		//oss << (int)((val >> (sizeof(std::size_t)*8-bi-1)) & 1);
 	}
 }
-
-qram::qram(const unsigned int& nb,std::ostream& os):
+class private_qnot:public qgate
+{
+public:
+	private_qnot():qgate(1,"NOT")
+	{}
+	virtual void apply(std::complex<double>* out,const std::complex<double>* in) const
+	{
+		out[0]=in[1];
+		out[1]=in[0];
+	}
+};
+qram::qram(const unsigned int& nb,std::ostream& os,const unsigned int& initialstate):
 	num_entries(1),
 	num_bits(nb),
 	oss(os)
@@ -33,6 +43,23 @@ qram::qram(const unsigned int& nb,std::ostream& os):
 	memset(state,0,num_entries*sizeof(std::complex<double>));
 	//memset(state_back,0,num_entries*sizeof(std::complex<double>));
 	state[0]=1.0;//100% of being in the |0000...00> state
+	
+	private_qnot pqn;
+	for(unsigned int i=0;i<num_bits;i++)
+	{
+		unsigned int cmask = 1 << i;
+		if(initialstate & cmask)
+		{
+			op(pqn,cmask);
+		}
+	}
+	
+	
+	for(unsigned int i=0;i<num_bits;i++)
+	{
+		os << "+-";
+	}
+	os << "--Initialization complete--\n";
 
 }
 
@@ -149,7 +176,7 @@ qram::measurement qram::measure(const std::size_t mask) const
 	const std::size_t lowermask=(1 << mask_bits)-1;
 	qram::measurement ms(1 << mask_bits);
 	ms.num_bits=mask_bits;
-	
+        std::complex<double> mag2=0.0;
 	for(std::size_t mi=0;mi<(lowermask+1);mi++)
 	{
 		std::complex<double> sm=0.0;
@@ -160,6 +187,12 @@ qram::measurement qram::measure(const std::size_t mask) const
 			sm+=state[index];
 		}
 		ms.state[mi]=sm;
+                mag2+=sm;
+        }
+        mag2=std::sqrt(mag2);
+        for(std::vector<std::complex<double> >::iterator i=ms.state.begin();i!=ms.state.end();++i)
+	{
+		*i /= mag2;
 	}
 	/*
 	for(std::size_t i=0;i<num_entries;i++)
