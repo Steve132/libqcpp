@@ -61,11 +61,12 @@ class qcswap:public qgate
 public:
 	qcswap():qgate(3,"CSWAP")
 	{
-		//2 is control,1,0 are swapped
+		//0 is control,2,1 are swapped
 	}
 	virtual void apply(std::complex<double>* out,const std::complex<double>* in) const
 	{
 		//out
+		/*2 is control, 0,1 swapped 
 		out[0]=in[0];
 		out[1]=in[1];
 		out[2]=in[2];
@@ -74,26 +75,37 @@ public:
 		out[5]=in[6];
 		out[6]=in[5];
 		out[7]=in[7];
+		*/
+		
+		/*0 is control, 2,1 swapped*/
+		out[0]=in[0];
+		out[1]=in[1];
+		out[2]=in[2];
+		out[3]=in[5];
+		out[4]=in[4];
+		out[5]=in[3];
+		out[6]=in[6];
+		out[7]=in[7];
 	}
 };
-class qrotate:public qgate
+class qshift:public qgate
 {
 public:
-	qrotate(const double& t):
-		qgate(2,"Rotate"),theta(2)
+	qshift(const double& t):
+		qgate(1,"shift"),
+		a(std::cos(t),std::sin(t))
 	{
-		std::ostringstream oss("Rotate-");
-		oss << theta;
+		std::ostringstream oss("shift-");
+		oss << t;
 		gate_name=oss.str();
 	}
 	virtual void apply(std::complex<double>* out,const std::complex<double>* in) const
 	{
-		std::complex<double> a(cos(theta),sin(theta));
-		out[0]=a*in[0];
+		out[0]=in[0];
 		out[1]=a*in[1];
 	}
 protected:
-	double theta;
+	std::complex<double> a;
 };
 
 

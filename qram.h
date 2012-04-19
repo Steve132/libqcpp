@@ -40,7 +40,7 @@ public:
 	void op(const qgate& g,std::size_t mask);
 	measurement measure(std::size_t mask) const;
 	
-	qram(const unsigned int& num_bits,std::ostream& os);
+	qram(const unsigned int& num_bits,std::ostream& os,const unsigned int& initialstate=0);
 	~qram();
 		
 	std::complex<double>* state;

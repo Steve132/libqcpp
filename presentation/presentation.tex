@@ -36,7 +36,7 @@
 }
 
 \title
-{libqcpp: A quantum circuit simulator}
+{libqcpp: A C++ quantum circuit simulator}
 \subtitle{Architecture and Usage}
 \author
 {Steven Braeger}
@@ -173,8 +173,8 @@ Simple matrix mechanics for single gates
   \end{equation*}
 \column{1.5in}
     \Qcircuit @C=1em @R=.7em {
-\lstick{q0} & \ctrl{1} &  \qw \\
-\lstick{q1} & \targ & \qw \\
+\lstick{q0} & \targ &  \qw \\
+\lstick{q1} & \ctrl{-1}& \qw \\
 }
 \end{columns}
 \end{frame}
@@ -198,8 +198,8 @@ What about multiple wires?
 \begin{center}
 \begin{minipage}{\paperwidth}
   \Qcircuit @C=2em @R=2em {
-\lstick{q0} & \ctrl{1} &  \qw \\
-\lstick{q1} & \targ & \qw \\
+\lstick{q0} & \targ &  \qw \\
+\lstick{q1} & \ctrl{-1} & \qw \\
 \lstick{q2} & \qw &  \qw \\
 \lstick{q3} & \qw & \qw \\
 }
@@ -269,9 +269,9 @@ What about multiple wires?
 \begin{minipage}{\paperwidth}
   \Qcircuit @C=2em @R=2em {
 \lstick{q0} & \qw &  \qw \\
-\lstick{q1} & \ctrl{2} & \qw \\
+\lstick{q1} & \targ & \qw \\
 \lstick{q2} & \qw &  \qw \\
-\lstick{q3} & \targ & \qw \\
+\lstick{q3} & \ctrl{-2} & \qw \\
 }
 \end{minipage}
 \end{center}
@@ -393,7 +393,7 @@ What about multiple wires?
     \item Classes:  qgate
     \item qgate has an associated name and a number of gates $k$
     \item virtual apply() member function changes $2^k$ length state vector.
-    \item state vector is std::vector<std::complex<double> >
+    \item state vector is std::vector\textless std::complex\textless double\textgreater \textgreater
    \end{itemize}
 
    \begin{itemize}
@@ -458,6 +458,10 @@ Insert a swap
 \end{columns}
  
 \end{frame}
+\section{Examples}
+\subsection{Deutch's}
+\subsection{Deutch-Josza}
+\subsection{Homework Examples}
 
 \begin{frame}
  \frametitle{API Examples}
@@ -480,6 +484,8 @@ Insert a swap
 
 \begin{frame}
  \frametitle{Questions?}
+
+  Under the GPL
   Can be downloaded using svn at 
   
 http://code.google.com/p/libqcpp
