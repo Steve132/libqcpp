@@ -6,6 +6,17 @@
 #include<vector>
 #include<cmath>
 
+namespace qcpp
+{
+	class qgate;
+	class qram;
+}
+
+std::ostream& operator<<(std::ostream&,const qcpp::qram&);
+
+
+namespace qcpp
+{
 class qgate
 {
 public:
@@ -44,18 +55,20 @@ public:
 	~qram();
 		
 	std::complex<double>* state;
+	
+	
+	const std::size_t num_entries;
+	const unsigned int num_bits;
 protected:
 		
-	std::size_t num_entries;
-	unsigned int num_bits;
 	
 	std::ostream& oss;
 	std::complex<double>* state_back;
-	friend std::ostream& operator<<(std::ostream&,const qram&);
+	friend std::ostream& ::operator<<(std::ostream&,const qram&);
 };
+}
 
-std::ostream& operator<<(std::ostream&,const qram&);
-std::ostream& operator<<(std::ostream&,const qram::measurement&);
+std::ostream& operator<<(std::ostream&,const qcpp::qram::measurement&);
 
 #include "qram.inl"
 

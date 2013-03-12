@@ -2,6 +2,7 @@
 #include "../qram.h"
 #include "../qgates.h"
 using namespace std;
+using namespace qcpp;
 
 typedef bool (*FUNCPTR)(const std::size_t&);
 //lowest bit is y

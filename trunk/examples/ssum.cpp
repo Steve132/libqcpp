@@ -2,6 +2,7 @@
 #include "../qgates.h"
 #include <iostream>
 using namespace std;
+using namespace qcpp;
 
 template<unsigned as>
 class qadder: public qgate
