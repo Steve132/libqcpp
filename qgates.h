@@ -4,6 +4,9 @@
 #include "qram.h"
 #include<sstream>
 
+namespace qcpp
+{
+
 static const double s2=0.7071067811865475244008443;
 
 class qhadamard:public qgate
@@ -107,6 +110,7 @@ public:
 protected:
 	std::complex<double> a;
 };
+}
 
 
 #endif

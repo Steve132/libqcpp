@@ -2,6 +2,7 @@
 #include "../qram.h"
 #include "../qgates.h"
 using namespace std;
+using namespace qcpp;
 
 class cphasor:public qgate
 {

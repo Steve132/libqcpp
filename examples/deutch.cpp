@@ -2,7 +2,7 @@
 #include "../qram.h"
 #include "../qgates.h"
 #include<cstdlib>
-
+using namespace qcpp;
 using namespace std;
 
 

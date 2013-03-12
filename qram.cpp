@@ -2,6 +2,7 @@
 #include<stdexcept>
 #include<cstring>
 #include<iostream>
+using namespace qcpp;
 
 static inline void print_binary(std::ostream& oss,const std::size_t& val,const unsigned int& bits)
 {
@@ -24,7 +25,7 @@ public:
 	}
 };
 qram::qram(const unsigned int& nb,std::ostream& os,const unsigned int& initialstate):
-	num_entries(1),
+	num_entries(1 << nb),
 	num_bits(nb),
 	oss(os)
 {
@@ -32,7 +33,7 @@ qram::qram(const unsigned int& nb,std::ostream& os,const unsigned int& initialst
 	{
 		throw std::range_error("Cannot allocate a qregister larger than the size of a machine pointer");
 	}
-	num_entries <<= num_bits;
+
 	state=new std::complex<double>[num_entries];
 	state_back=new std::complex<double>[num_entries];
 	/*for(std::size_t index=0;index<num_entries/2;index++)
