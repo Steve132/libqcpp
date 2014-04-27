@@ -24,7 +24,7 @@ int main()
 		
 		mgate();
 		
-		cerr << "result" << mgate.result << endl;
+		cerr << "result " << mgate.result << endl;
 	}
 	catch(const cl::Error& e)
 	{
