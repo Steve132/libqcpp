@@ -74,24 +74,24 @@ public:
 	{}
 };
 
-class CIRCRSHIFT: public QGate1Arg<cl_short,QClassicalGate>
+class CIRCRSHIFTI: public QGate1Arg<cl_short,QClassicalGate>
 {
 private:
 	static std::string src;
 public:
-	CIRCRSHIFT(QMachine& m,const cl_short& lit=0,const std::size_t& bu=0):
-		QGate1Arg<cl_short,QClassicalGate>(m,bu,CIRCRSHIFT::src,"short",lit)
+	CIRCRSHIFTI(QMachine& m,const cl_short& lit=0,const std::size_t& bu=0):
+		QGate1Arg<cl_short,QClassicalGate>(m,bu,CIRCRSHIFTI::src,"short",lit)
 	{}
 };
 
 
-class HADAMARD: public QQuantumGate
+class HADAMARD1: public QQuantumGate
 {
 private:
 	static std::string src;
 public:
-        HADAMARD(QMachine& m):
-	        QQuantumGate(m,1,HADAMARD::src)
+        HADAMARD1(QMachine& m):
+	        QQuantumGate(m,1,HADAMARD1::src)
 	{}
 };
 
@@ -122,14 +122,12 @@ private:
 public:
 	permutation_t argval;
 	PERMUTE(QMachine& m,const permutation_t& lit=permutation_t(),const std::size_t& bu=0):
-		QClassicalGate(m,bu,PERMUTE::src,"struct { char indices[64]; }"),
+		QClassicalGate(m,bu,PERMUTE::src,"struct { char indices[REG_MAX_SIZE]; }"),
 		argval(lit)
 	{}
 	
-	virtual void operator()();
-	virtual void operator()(const permutation_t& a0);
-	virtual void operator()(QMachine& qm);
-	virtual void operator()(QMachine& qm,const permutation_t& a0);
+	virtual QOperationRecord operator()(const::std::initializer_list<QRegister>& regs);
+	virtual QOperationRecord operator()(const permutation_t& regperm,const cl_ulong& regspec);
 };
 
 class MEASUREMENT: public QGate
@@ -138,13 +136,25 @@ private:
 	static std::string tsrc;
 	static std::string gatesrc;
 	std::uint64_t mresult;
-	CIRCRSHIFT msbshift;
-	virtual void apply(QMachine& qm);
+	CIRCRSHIFTI msbshift;
+protected:
+	virtual void apply(const cl_ulong& regspec);
 public:
 	MEASUREMENT(QMachine& m,const std::size_t& bu=0);
 	
 	const std::uint64_t& result;
 };
 
+class BIT_1_TO_N: public QEmptyGate
+{
+private:
+	QGate& one_bit_gate;
+	virtual void apply(const cl_ulong& regspec);
+public:
+	BIT_1_TO_N(QMachine& m,QGate& obg):
+		QEmptyGate(m,1),
+		one_bit_gate(obg)
+	{}
+};
 
 #endif 
