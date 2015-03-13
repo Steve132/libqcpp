@@ -1,0 +1,1 @@
+This is a C++ Quantum Circuit Simulator library in C++.  It provides an api to a quantum register machine model as well as a number of built-in gates to apply to circuitry.  It includes several examples of various quantum algorithms, including the deutchs algorithm and others.  It runs in parallel on a multi-core computer using OpenMP.
